@@ -12,6 +12,17 @@
     height: 7rem;
     background-color: $color-white;
     border-radius: 50%;
+    box-shadow: 0 1rem 3rem rgba($color-black, 0.1);
+    text-align: center;
+    cursor: pointer;
+  }
+
+  &__button:hover &__icon::after {
+    top: 1rem;
+  }
+
+  &__button:hover &__icon::before {
+    top: -1rem;
   }
 
   &__checkbox:checked ~ &__background {
@@ -31,31 +42,34 @@
       $color-primary-light,
       $color-primary-dark
     );
-    transition: all 0.5s;
+    transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
   }
 
   &__nav {
     height: 100vh;
-    width: 100%;
+    width: 0;
     position: fixed;
     top: 0;
-    right: 0;
+    left: 0;
     z-index: 1500;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
   &__list {
     position: absolute;
     top: 50%;
-    left: -50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     list-style: none;
     text-align: center;
-    transition: all 0.5s;
+    transition: all 0.8s;
+    width: 100%;
   }
 
-  &__checkbox:checked ~ &__nav &__list {
-    top: 50%;
-    left: 50%;
+  &__checkbox:checked ~ &__nav {
+    opacity: 1;
+    width: 100%;
   }
 
   &__item {
@@ -82,7 +96,7 @@
       display: inline-block;
 
       span {
-        margin-right: 1rem;
+        margin-right: 1.5rem;
         display: inline-block;
       }
     }
@@ -93,5 +107,49 @@
       color: $color-primary;
       transform: translateX(1rem);
     }
+  }
+
+  &__icon {
+    position: relative;
+    margin-top: 3.5rem;
+
+    &,
+    &::before,
+    &::after {
+      width: 3rem;
+      height: 2px;
+      background-color: $color-grey-dark;
+      display: inline-block;
+    }
+
+    &::after,
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      transition: all 0.2s;
+    }
+
+    &::before {
+      top: -0.8rem;
+    }
+
+    &::after {
+      top: 0.8rem;
+    }
+  }
+
+  &__checkbox:checked ~ &__button &__icon {
+    background-color: transparent;
+  }
+
+  &__checkbox:checked ~ &__button &__icon::after {
+    transform: rotate(-135deg);
+    top: 0;
+  }
+
+  &__checkbox:checked ~ &__button &__icon::before {
+    top: 0;
+    transform: rotate(135deg);
   }
 }
